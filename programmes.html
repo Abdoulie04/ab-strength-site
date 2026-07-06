@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script>
+  (function() {
+    var t = localStorage.getItem('ab-strength-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmes — AB STRENGTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">AB <span class="logo-accent">STRENGTH</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html#programmes">Programmes</a>
+      <a href="index.html#comment-ca-marche">Comment ça marche</a>
+      <a href="#avant-apres">Avant / Après</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="admin/login.html" class="nav-admin">Espace admin</a>
+    </nav>
+    <div class="header-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line>
+        <line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line>
+        <line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      </svg>
+    </button>
+    <button class="burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== EN-TÊTE CATÉGORIE ===== -->
+<!-- ===== EN-TÊTE CATÉGORIE ===== -->
+<section class="page-hero">
+  <div class="page-hero-media">
+    <video class="page-hero-media-el" id="pageHeroVideo" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
+      <source src="" type="video/mp4" id="pageHeroSource">
+    </video>
+  </div>
+  <div class="page-hero-overlay"></div>
+
+  <div class="page-hero-inner">
+    <button class="back-btn" id="backBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Retour
+    </button>
+    <p class="section-eyebrow" id="catEyebrow">Catégorie</p>
+    <h1 class="page-hero-title" id="catTitle">Programmes</h1>
+    <p class="page-hero-sub" id="catSub"></p>
+  </div>
+</section>
+
+<!-- ===== LISTE DES PROGRAMMES ===== -->
+<section class="catalogue">
+  <div class="catalogue-inner">
+
+    <div class="state-message" id="loadingState">
+      <div class="spinner"></div>
+      <p>Chargement des programmes...</p>
+    </div>
+
+    <div class="state-message" id="emptyState" style="display:none;">
+      <p>Aucun programme disponible dans cette catégorie pour le moment.</p>
+      <a href="index.html#programmes" class="btn btn-ghost">Voir toutes les catégories</a>
+    </div>
+
+    <div class="state-message" id="errorState" style="display:none;">
+      <p>Impossible de charger les programmes. Vérifie ta connexion et réessaie.</p>
+    </div>
+
+    <div class="catalogue-grid" id="catalogueGrid"></div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="logo">AB <span class="logo-accent">STRENGTH</span></span>
+    <p>© 2026 — Programmes de musculation par Abdoulie</p>
+    <a href="admin/login.html" class="footer-admin">Espace admin</a>
+  </div>
+</footer>
+
+<!-- ===== BOUTON RETOUR EN HAUT ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Remonter en haut de la page">
+  <svg class="btt-ring" viewBox="0 0 60 60">
+    <circle class="btt-ring-bg" cx="30" cy="30" r="26"/>
+    <circle class="btt-ring-progress" id="bttProgress" cx="30" cy="30" r="26"/>
+  </svg>
+  <svg class="btt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+</button>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="config.js"></script>
+<script src="theme-toggle.js"></script>
+<script src="common.js"></script>
+<script src="programmes.js"></script>
+</body>
+</html>

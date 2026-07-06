@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script>
+  (function() {
+    var t = localStorage.getItem('ab-strength-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AB STRENGTH — Programmes de musculation sur mesure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#hero" class="logo">AB <span class="logo-accent">STRENGTH</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#programmes">Programmes</a>
+      <a href="#comment-ca-marche">Comment ça marche</a>
+      <a href="#avant-apres">Avant / Après</a>
+      <a href="#coaching">Coaching perso</a>
+      <a href="#contact">Contact</a>
+      <a href="admin/login.html" class="nav-admin">Espace admin</a>
+    </nav>
+    <div class="header-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line>
+        <line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line>
+        <line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      </svg>
+    </button>
+    <button class="burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+
+  <div class="hero-media">
+    <video class="hero-media-el" id="heroImg" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-grain"></div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow" id="heroEyebrow"><span class="pulse-dot"></span>Coaching structuré · 6 objectifs · zéro improvisation</p>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="line-mask"><span class="line">CHARGE</span></span>
+      <span class="line-mask"><span class="line">TON</span></span>
+      <span class="line-mask"><span class="line hero-title-accent">PROGRAMME</span></span>
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      Prise de masse, sèche sans perte musculaire, perte de gras, cardio, perte de poids ou maintien de forme —
+      chaque objectif a sa méthode. Choisis le tien, on te donne le plan complet.
+    </p>
+    <div class="hero-cta" id="heroCta">
+      <a href="#programmes" class="btn btn-primary magnetic">Voir les programmes</a>
+      <a href="#contact" class="btn btn-ghost magnetic">Poser une question</a>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator" data-aos="fade-in" data-aos-delay="800">
+    <span></span>
+    <p>Scroll</p>
+  </div>
+</section>
+
+<!-- ===== BARRE STATS ===== -->
+<section class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat" data-aos="fade-up">
+      <span class="stat-num" data-count="6">0</span>
+      <span class="stat-label">Objectifs couverts</span>
+    </div>
+    <div class="stat" data-aos="fade-up" data-aos-delay="100">
+      <span class="stat-num" data-count="100">0</span>
+      <span class="stat-label">% des séances détaillées</span>
+    </div>
+    <div class="stat" data-aos="fade-up" data-aos-delay="200">
+      <span class="stat-num" data-count="0">0</span>
+      <span class="stat-label">Improvisation</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAMMES — BARBELL LOADING ===== -->
+<section class="programmes" id="programmes">
+  <div class="programmes-media">
+    <video class="programmes-media-el" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="programmes-overlay"></div>
+
+  <div class="programmes-content">
+    <div class="programmes-head" data-aos="fade-up">
+      <p class="section-eyebrow">Les 6 objectifs</p>
+      <h2 class="section-title">Un programme pour chaque charge de travail</h2>
+    </div>
+
+    <!-- Barre qui se charge au fil du scroll -->
+    <div class="barbell-rail" id="barbellRail">
+      <svg class="barbell-svg" id="barbellSvg" viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="60" x2="840" y2="60" stroke="var(--steel)" stroke-width="10" stroke-linecap="round"/>
+        <!-- 6 emplacements de disques, remplis un par un via JS/scroll -->
+        <g id="plate1" class="plate" data-plate="1"><circle cx="120" cy="60" r="0" fill="var(--blue)"/></g>
+        <g id="plate2" class="plate" data-plate="2"><circle cx="240" cy="60" r="0" fill="var(--ice)"/></g>
+        <g id="plate3" class="plate" data-plate="3"><circle cx="360" cy="60" r="0" fill="var(--blue)"/></g>
+        <g id="plate4" class="plate" data-plate="4"><circle cx="540" cy="60" r="0" fill="var(--ice)"/></g>
+        <g id="plate5" class="plate" data-plate="5"><circle cx="660" cy="60" r="0" fill="var(--blue)"/></g>
+        <g id="plate6" class="plate" data-plate="6"><circle cx="780" cy="60" r="0" fill="var(--ice)"/></g>
+      </svg>
+      <p class="barbell-caption" id="barbellCaption">0 / 6 objectifs chargés</p>
+    </div>
+
+    <div class="programmes-grid">
+
+      <article class="prog-card tilt-card" data-plate-target="1" data-aos="fade-up">
+        <span class="prog-index">01</span>
+        <h3>Prise de masse</h3>
+        <p>Surplus calorique contrôlé, volume progressif, priorité aux mouvements poly-articulaires. Pour construire du muscle sans empiler du gras inutilement.</p>
+        <a href="programmes.html?cat=prise_masse" class="prog-link">Voir le programme →</a>
+      </article>
+
+      <article class="prog-card tilt-card" data-plate-target="2" data-aos="fade-up">
+        <span class="prog-index">02</span>
+        <h3>Sèche sans perte musculaire</h3>
+        <p>Déficit calorique modéré, apport protéique élevé, maintien des charges. L'objectif : révéler le muscle, pas le sacrifier.</p>
+        <a href="programmes.html?cat=seche" class="prog-link">Voir le programme →</a>
+      </article>
+
+      <article class="prog-card tilt-card" data-plate-target="3" data-aos="fade-up">
+        <span class="prog-index">03</span>
+        <h3>Perte de gras</h3>
+        <p>Combinaison musculation + travail métabolique. Un plan pensé pour faire fondre la masse grasse tout en gardant ton énergie.</p>
+        <a href="programmes.html?cat=perte_gras" class="prog-link">Voir le programme →</a>
+      </article>
+
+      <article class="prog-card tilt-card" data-plate-target="4" data-aos="fade-up">
+        <span class="prog-index">04</span>
+        <h3>Maintien de forme</h3>
+        <p>Volume d'entretien, fréquence modérée. Pour rester performant et solide sans viser une progression agressive.</p>
+        <a href="programmes.html?cat=maintien" class="prog-link">Voir le programme →</a>
+      </article>
+
+      <article class="prog-card tilt-card" data-plate-target="5" data-aos="fade-up">
+        <span class="prog-index">05</span>
+        <h3>Cardio</h3>
+        <p>Endurance, capacité respiratoire, santé cardiovasculaire. Des séances structurées, du seuil au fractionné.</p>
+        <a href="programmes.html?cat=cardio" class="prog-link">Voir le programme →</a>
+      </article>
+
+      <article class="prog-card tilt-card" data-plate-target="6" data-aos="fade-up">
+        <span class="prog-index">06</span>
+        <h3>Perte de poids</h3>
+        <p>Approche globale : déficit calorique, activité physique régulière, régularité avant tout. Pas de raccourci, des résultats durables.</p>
+        <a href="programmes.html?cat=perte_poids" class="prog-link">Voir le programme →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMMENT ÇA MARCHE ===== -->
+<section class="how" id="comment-ca-marche">
+  <div class="how-inner">
+    <p class="section-eyebrow" data-aos="fade-up">La méthode</p>
+    <h2 class="section-title" data-aos="fade-up">Trois étapes, aucune improvisation</h2>
+    <div class="how-steps">
+      <div class="how-step" data-aos="fade-up" data-aos-delay="0">
+        <span class="how-num">01</span>
+        <h3>Choisis ton objectif</h3>
+        <p>Prise de masse, sèche, perte de gras, cardio, maintien ou perte de poids — un objectif clair, un programme dédié.</p>
+      </div>
+      <div class="how-step" data-aos="fade-up" data-aos-delay="150">
+        <span class="how-num">02</span>
+        <h3>Suis le plan détaillé</h3>
+        <p>Chaque séance, chaque exercice, chaque série, répétition et temps de récupération sont posés noir sur blanc.</p>
+      </div>
+      <div class="how-step" data-aos="fade-up" data-aos-delay="300">
+        <span class="how-num">03</span>
+        <h3>Progresse, ajuste</h3>
+        <p>Les programmes évoluent. Une question, un doute ? Le formulaire de contact t'ouvre une ligne directe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AVANT / APRÈS ===== -->
+<section class="transformations" id="avant-apres">
+  <div class="transformations-head" data-aos="fade-up">
+    <p class="section-eyebrow">Résultats réels</p>
+    <h2 class="section-title">Avant / Après</h2>
+    <p class="transformations-sub">Fais glisser le curseur pour voir la transformation.</p>
+  </div>
+
+  <div class="state-message" id="transfoLoading">
+    <div class="spinner"></div>
+  </div>
+  <div class="state-message" id="transfoEmpty" style="display:none;">
+    <p>Les premières transformations arrivent bientôt.</p>
+  </div>
+
+  <div class="transformations-grid" id="transformationsGrid"></div>
+</section>
+
+<!-- ===== COACHING PERSONNALISÉ ===== -->
+<section class="coaching" id="coaching">
+  <div class="coaching-inner" data-aos="fade-up">
+    <p class="section-eyebrow">Service premium</p>
+    <h2 class="section-title">Programme &amp; accompagnement personnalisés</h2>
+    <p class="coaching-text">
+      Un programme sur mesure, ajusté à ton corps, ton emploi du temps et ton objectif — avec un suivi direct.
+      Ce n'est pas un programme générique : c'est construit spécifiquement pour toi, avec des ajustements réguliers.
+    </p>
+    <p class="coaching-price">Tarif sur devis — contacte-moi pour en discuter</p>
+    <div class="coaching-cta">
+      <a href="https://wa.me/221771107964?text=Bonjour%20Abdoulie%2C%20je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20un%20programme%20personnalis%C3%A9%20et%20un%20accompagnement%20sur%20mesure.%20Pouvez-vous%20m'en%20dire%20plus%20%3F"
+         target="_blank" rel="noopener" class="btn btn-primary magnetic btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.4.2-.7.1-1-.4-2.8-1.5-3.7-3-.2-.3-.1-.5.1-.7.2-.2.4-.5.6-.7.2-.2.2-.4.1-.7-.1-.3-.6-1.5-.8-2-.2-.4-.4-.4-.6-.4h-.6c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.1 0 1.3 1 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4 2.7 1 2.7.7 3.2.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.2L2 22l4.9-1.5C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3.2 1 1-3.1-.2-.3C4 15 3.5 13.5 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/></svg>
+        Écrire sur WhatsApp
+      </a>
+      <a href="#contact" class="btn btn-ghost magnetic" id="coachingContactLink">Envoyer un message</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left" data-aos="fade-right">
+      <p class="section-eyebrow">Une question ?</p>
+      <h2 class="section-title">Écris-moi directement</h2>
+      <p class="contact-text">Un doute sur un programme, une envie de conseil personnalisé — le message atterrit directement dans ma boîte de gestion.</p>
+    </div>
+    <form class="contact-form" id="contactForm" data-aos="fade-left">
+      <div class="form-row">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-row">
+        <label for="sujet">Sujet</label>
+        <select id="sujet" name="sujet">
+          <option value="general">Question générale</option>
+          <option value="coaching_personnalise">Programme personnalisé (payant)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" id="contactSubmit">Envoyer le message</button>
+      <p class="form-feedback" id="formFeedback"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="logo">AB <span class="logo-accent">STRENGTH</span></span>
+    <p>© 2026 — Programmes de musculation par Abdoulie</p>
+    <a href="admin/login.html" class="footer-admin">Espace admin</a>
+  </div>
+</footer>
+
+<!-- ===== BOUTON RETOUR EN HAUT ===== -->
+<button class="back-to-top" id="backToTop" aria-label="Remonter en haut de la page">
+  <svg class="btt-ring" viewBox="0 0 60 60">
+    <circle class="btt-ring-bg" cx="30" cy="30" r="26"/>
+    <circle class="btt-ring-progress" id="bttProgress" cx="30" cy="30" r="26"/>
+  </svg>
+  <svg class="btt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="19" x2="12" y2="5"></line>
+    <polyline points="5 12 12 5 19 12"></polyline>
+  </svg>
+</button>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="config.js"></script>
+<script src="theme-toggle.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

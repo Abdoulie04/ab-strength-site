@@ -1,0 +1,334 @@
+// =========================================
+// INIT AOS (animations au scroll)
+// =========================================
+AOS.init({
+  duration: 800,
+  once: true,
+  offset: 60,
+  easing: 'ease-out-cubic'
+});
+
+// =========================================
+// HERO — reveal orchestré au chargement (GSAP)
+// =========================================
+const heroTimeline = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+heroTimeline
+  .to('#heroGlow', { opacity: 1, duration: 1.2 }, 0)
+  .to('#heroEyebrow', { opacity: 1, y: 0, duration: 0.6 }, 0.1)
+  .to('.hero-title .line', {
+    y: '0%',
+    duration: 1,
+    stagger: 0.12
+  }, 0.15)
+  .to('#heroSub', { opacity: 1, duration: 0.6 }, 0.7)
+  .to('#heroCta', { opacity: 1, duration: 0.6 }, 0.85);
+
+// =========================================
+// PARALLAXE SUR L'IMAGE DE FOND DU HERO
+// =========================================
+gsap.to('#heroImg', {
+  yPercent: 15,
+  scale: 1.15,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+
+// =========================================
+// PARALLAXE LÉGER SUR LE HALO DU HERO
+// =========================================
+gsap.to('#heroGlow', {
+  yPercent: 30,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+
+// =========================================
+// BOUTONS MAGNÉTIQUES
+// =========================================
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    gsap.to(btn, { x: x * 0.25, y: y * 0.4, duration: 0.3, ease: 'power2.out' });
+  });
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+  });
+});
+
+// =========================================
+// CARTES PROGRAMMES — tilt 3D + lueur suivant la souris
+// =========================================
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y - rect.height / 2) / rect.height) * -6;
+    const rotateY = ((x - rect.width / 2) / rect.width) * 6;
+
+    card.style.setProperty('--mx', `${x}px`);
+    card.style.setProperty('--my', `${y}px`);
+    gsap.to(card, { rotateX, rotateY, duration: 0.4, ease: 'power2.out', transformPerspective: 600 });
+  });
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' });
+  });
+});
+
+// =========================================
+// MENU BURGER (mobile)
+// =========================================
+const burgerBtn = document.getElementById('burgerBtn');
+const mainNav = document.getElementById('mainNav');
+
+burgerBtn.addEventListener('click', () => {
+  mainNav.classList.toggle('open');
+});
+
+// Ferme le menu si on clique sur un lien
+mainNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => mainNav.classList.remove('open'));
+});
+
+// =========================================
+// BOUTON RETOUR EN HAUT — anneau de progression
+// =========================================
+const backToTop = document.getElementById('backToTop');
+const bttProgress = document.getElementById('bttProgress');
+const RING_CIRCUMFERENCE = 163.36;
+
+function updateBackToTop() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+  bttProgress.style.strokeDashoffset = RING_CIRCUMFERENCE - (progress * RING_CIRCUMFERENCE);
+
+  if (scrollTop > 400) backToTop.classList.add('visible');
+  else backToTop.classList.remove('visible');
+}
+
+window.addEventListener('scroll', updateBackToTop);
+updateBackToTop();
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// =========================================
+// HEADER : fond plus opaque au scroll
+// =========================================
+const siteHeader = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// =========================================
+// COMPTEURS ANIMÉS (stats strip)
+// =========================================
+const counters = document.querySelectorAll('.stat-num');
+let countersAnimated = false;
+
+function animateCounters() {
+  if (countersAnimated) return;
+  countersAnimated = true;
+
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count'), 10);
+    const duration = 1400;
+    const start = performance.now();
+
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const value = Math.floor(progress * target);
+      counter.textContent = value;
+      if (progress < 1) requestAnimationFrame(update);
+      else counter.textContent = target;
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+const statsStrip = document.querySelector('.stats-strip');
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) animateCounters();
+  });
+}, { threshold: 0.4 });
+if (statsStrip) statsObserver.observe(statsStrip);
+
+// =========================================
+// BARBELL LOADING — les disques se chargent
+// au fur et à mesure que les cartes programmes
+// apparaissent à l'écran
+// =========================================
+const progCards = document.querySelectorAll('.prog-card');
+const barbellCaption = document.getElementById('barbellCaption');
+let plateCount = 0;
+
+const plateObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const targetId = entry.target.getAttribute('data-plate-target');
+      const plate = document.getElementById('plate' + targetId);
+      if (plate && !plate.classList.contains('loaded')) {
+        plate.classList.add('loaded');
+        plateCount++;
+        barbellCaption.textContent = `${plateCount} / 6 objectifs chargés`;
+      }
+      plateObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+progCards.forEach(card => plateObserver.observe(card));
+
+// =========================================
+// AVANT / APRÈS — galerie + curseur de comparaison
+// =========================================
+const transfoLoading = document.getElementById('transfoLoading');
+const transfoEmpty = document.getElementById('transfoEmpty');
+const transformationsGrid = document.getElementById('transformationsGrid');
+
+function escapeHtmlLocal(str) {
+  const div = document.createElement('div');
+  div.textContent = str ?? '';
+  return div.innerHTML;
+}
+
+async function loadTransformations() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/transformations`);
+    if (!response.ok) throw new Error('Erreur réseau');
+
+    const transformations = await response.json();
+    transfoLoading.style.display = 'none';
+
+    if (transformations.length === 0) {
+      transfoEmpty.style.display = 'block';
+      return;
+    }
+
+    transformationsGrid.innerHTML = transformations.map((t, i) => `
+      <div class="transfo-card" data-aos="fade-up" data-aos-delay="${i * 80}">
+        <div class="transfo-slider">
+          <img src="${t.image_apres}" alt="Après" class="transfo-img">
+          <img src="${t.image_avant}" alt="Avant" class="transfo-img apres">
+          <span class="transfo-label label-avant">Avant</span>
+          <span class="transfo-label label-apres">Après</span>
+          <div class="transfo-handle"></div>
+        </div>
+        ${(t.nom_client || t.description) ? `
+          <div class="transfo-info">
+            ${t.nom_client ? `<h4>${escapeHtmlLocal(t.nom_client)}</h4>` : ''}
+            ${t.description ? `<p>${escapeHtmlLocal(t.description)}</p>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+
+    if (window.AOS) AOS.refresh();
+    initTransfoSliders();
+
+  } catch (err) {
+    console.error(err);
+    transfoLoading.style.display = 'none';
+    transfoEmpty.style.display = 'block';
+    transfoEmpty.querySelector('p').textContent = 'Impossible de charger les transformations pour le moment.';
+  }
+}
+
+function initTransfoSliders() {
+  document.querySelectorAll('.transfo-slider').forEach(slider => {
+    const apresImg = slider.querySelector('.transfo-img.apres');
+    const handle = slider.querySelector('.transfo-handle');
+    let dragging = false;
+
+    function updatePosition(clientX) {
+      const rect = slider.getBoundingClientRect();
+      let percent = ((clientX - rect.left) / rect.width) * 100;
+      percent = Math.max(0, Math.min(100, percent));
+      apresImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      handle.style.left = `${percent}%`;
+    }
+
+    slider.addEventListener('mousedown', (e) => { dragging = true; updatePosition(e.clientX); });
+    window.addEventListener('mousemove', (e) => { if (dragging) updatePosition(e.clientX); });
+    window.addEventListener('mouseup', () => { dragging = false; });
+
+    slider.addEventListener('touchstart', (e) => updatePosition(e.touches[0].clientX));
+    slider.addEventListener('touchmove', (e) => updatePosition(e.touches[0].clientX));
+  });
+}
+
+loadTransformations();
+
+// =========================================
+// LIEN "ENVOYER UN MESSAGE" DEPUIS LA SECTION COACHING
+// pré-sélectionne le sujet du formulaire de contact
+// =========================================
+const coachingContactLink = document.getElementById('coachingContactLink');
+if (coachingContactLink) {
+  coachingContactLink.addEventListener('click', () => {
+    const sujetSelect = document.getElementById('sujet');
+    if (sujetSelect) sujetSelect.value = 'coaching_personnalise';
+  });
+}
+
+// =========================================
+// FORMULAIRE DE CONTACT
+// =========================================
+const contactForm = document.getElementById('contactForm');
+const contactSubmit = document.getElementById('contactSubmit');
+const formFeedback = document.getElementById('formFeedback');
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const nom = document.getElementById('nom').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const sujet = document.getElementById('sujet').value;
+  const message = document.getElementById('message').value.trim();
+
+  if (!nom || !email || !message) {
+    formFeedback.textContent = "Merci de remplir tous les champs.";
+    return;
+  }
+
+  contactSubmit.disabled = true;
+  contactSubmit.textContent = "Envoi en cours...";
+  formFeedback.textContent = "";
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/messages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nom, email, message, sujet })
+    });
+
+    if (!response.ok) throw new Error("Erreur d'envoi");
+
+    formFeedback.textContent = "Message envoyé ! Je te réponds rapidement.";
+    contactForm.reset();
+
+  } catch (err) {
+    formFeedback.textContent = "Une erreur est survenue. Réessaie dans quelques instants.";
+    console.error(err);
+  } finally {
+    contactSubmit.disabled = false;
+    contactSubmit.textContent = "Envoyer le message";
+  }
+});

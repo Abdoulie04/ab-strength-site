@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script>
+  (function() {
+    var t = localStorage.getItem('ab-strength-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de bord — AB STRENGTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <div class="admin-header-left">
+    <span class="logo">AB <span class="logo-accent">STRENGTH</span></span>
+    <span class="admin-badge">Espace admin</span>
+  </div>
+  <div class="admin-header-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line>
+        <line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line>
+        <line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      </svg>
+    </button>
+    <span class="admin-name" id="adminName">Admin</span>
+    <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+  </div>
+</header>
+
+<main class="admin-main">
+
+  <div class="admin-tabs">
+    <button class="admin-tab-btn active" data-tab="programmes">Programmes</button>
+    <button class="admin-tab-btn" data-tab="transformations">Avant/Après</button>
+    <button class="admin-tab-btn" data-tab="messages">Messages <span id="unreadBadge"></span></button>
+  </div>
+
+  <!-- ===== PANEL PROGRAMMES ===== -->
+  <section class="admin-panel active" id="panel-programmes">
+    <div class="admin-section-head">
+      <h2>Programmes</h2>
+      <button class="btn btn-primary btn-sm" id="newProgrammeBtn">+ Nouveau programme</button>
+    </div>
+
+    <form class="admin-form" id="programmeForm" style="display:none;">
+      <input type="hidden" id="programmeFormId">
+      <div class="form-field">
+        <label for="pf_titre">Titre</label>
+        <input type="text" id="pf_titre" required>
+      </div>
+      <div class="form-field">
+        <label for="pf_categorie">Catégorie</label>
+        <select id="pf_categorie" required>
+          <option value="prise_masse">Prise de masse</option>
+          <option value="seche">Sèche sans perte musculaire</option>
+          <option value="perte_gras">Perte de gras</option>
+          <option value="maintien">Maintien de forme</option>
+          <option value="cardio">Cardio</option>
+          <option value="perte_poids">Perte de poids</option>
+        </select>
+      </div>
+      <div class="form-field full-width">
+        <label for="pf_description">Description</label>
+        <textarea id="pf_description" rows="3"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="pf_duree">Durée (semaines)</label>
+        <input type="number" id="pf_duree" min="1">
+      </div>
+      <div class="form-field">
+        <label for="pf_niveau">Niveau</label>
+        <select id="pf_niveau">
+          <option value="debutant">Débutant</option>
+          <option value="intermediaire">Intermédiaire</option>
+          <option value="avance">Avancé</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="pf_seances">Séances / semaine</label>
+        <input type="number" id="pf_seances" min="1" max="7">
+      </div>
+      <div class="form-field">
+        <label for="pf_image">URL image de couverture (optionnel)</label>
+        <input type="text" id="pf_image">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-icon" id="cancelProgrammeForm">Annuler</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="programmeFormSubmit">Créer le programme</button>
+      </div>
+    </form>
+
+    <div class="admin-list" id="programmesList"></div>
+  </section>
+
+  <!-- ===== PANEL TRANSFORMATIONS ===== -->
+  <section class="admin-panel" id="panel-transformations">
+    <div class="admin-section-head">
+      <h2>Avant / Après</h2>
+    </div>
+
+    <form class="admin-form" id="transfoForm">
+      <div class="form-field">
+        <label for="tf_nom">Nom du client (optionnel)</label>
+        <input type="text" id="tf_nom">
+      </div>
+      <div class="form-field">
+        <label for="tf_description">Description (optionnel)</label>
+        <input type="text" id="tf_description" placeholder="ex: 3 mois de prise de masse">
+      </div>
+      <div class="form-field">
+        <label for="tf_avant">URL de la photo "avant"</label>
+        <input type="text" id="tf_avant" required placeholder="https://...">
+      </div>
+      <div class="form-field">
+        <label for="tf_apres">URL de la photo "après"</label>
+        <input type="text" id="tf_apres" required placeholder="https://...">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-sm">+ Ajouter la transformation</button>
+      </div>
+    </form>
+
+    <div class="admin-list" id="transformationsList"></div>
+  </section>
+
+  <!-- ===== PANEL MESSAGES ===== -->
+  <section class="admin-panel" id="panel-messages">
+    <div class="admin-section-head">
+      <h2>Messages reçus</h2>
+    </div>
+    <div class="admin-list" id="messagesList"></div>
+  </section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../config.js"></script>
+<script src="../theme-toggle.js"></script>
+<script src="admin-common.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

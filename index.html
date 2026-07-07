@@ -12,7 +12,7 @@
 <title>AB STRENGTH — Programmes de musculation sur mesure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -23,7 +23,6 @@
     <nav class="main-nav" id="mainNav">
       <a href="#programmes">Programmes</a>
       <a href="#comment-ca-marche">Comment ça marche</a>
-      <a href="#avant-apres">Avant / Après</a>
       <a href="#coaching">Coaching perso</a>
       <a href="#contact">Contact</a>
       <a href="admin/login.html" class="nav-admin">Espace admin</a>
@@ -55,10 +54,14 @@
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
 
+  <!-- Fond plein écran : image par défaut. Pour une vidéo, commente le <img> et décommente le <video>. -->
   <div class="hero-media">
-    <video class="hero-media-el" id="heroImg" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
+    <img src="assets/hero-bg.jpg" alt="" class="hero-media-el" id="heroImg">
+    <!--
+    <video class="hero-media-el" id="heroVideo" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
       <source src="assets/hero-bg.mp4" type="video/mp4">
     </video>
+    -->
   </div>
   <div class="hero-overlay"></div>
 
@@ -106,79 +109,77 @@
 
 <!-- ===== PROGRAMMES — BARBELL LOADING ===== -->
 <section class="programmes" id="programmes">
-  <div class="programmes-media">
-    <video class="programmes-media-el" autoplay muted loop playsinline poster="assets/hero-bg.jpg">
-      <source src="assets/hero-bg.mp4" type="video/mp4">
+  <div class="section-media">
+    <video class="section-media-el" autoplay muted loop playsinline poster="assets/programmes-bg.jpg">
+      <source src="assets/programmes-bg.mp4" type="video/mp4">
     </video>
   </div>
-  <div class="programmes-overlay"></div>
+  <div class="section-overlay"></div>
 
-  <div class="programmes-content">
-    <div class="programmes-head" data-aos="fade-up">
-      <p class="section-eyebrow">Les 6 objectifs</p>
-      <h2 class="section-title">Un programme pour chaque charge de travail</h2>
-    </div>
+  <div class="programmes-head" data-aos="fade-up">
+    <p class="section-eyebrow">Les 6 objectifs</p>
+    <h2 class="section-title">Un programme pour chaque charge de travail</h2>
+  </div>
 
-    <!-- Barre qui se charge au fil du scroll -->
-    <div class="barbell-rail" id="barbellRail">
-      <svg class="barbell-svg" id="barbellSvg" viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
-        <line x1="60" y1="60" x2="840" y2="60" stroke="var(--steel)" stroke-width="10" stroke-linecap="round"/>
-        <!-- 6 emplacements de disques, remplis un par un via JS/scroll -->
-        <g id="plate1" class="plate" data-plate="1"><circle cx="120" cy="60" r="0" fill="var(--blue)"/></g>
-        <g id="plate2" class="plate" data-plate="2"><circle cx="240" cy="60" r="0" fill="var(--ice)"/></g>
-        <g id="plate3" class="plate" data-plate="3"><circle cx="360" cy="60" r="0" fill="var(--blue)"/></g>
-        <g id="plate4" class="plate" data-plate="4"><circle cx="540" cy="60" r="0" fill="var(--ice)"/></g>
-        <g id="plate5" class="plate" data-plate="5"><circle cx="660" cy="60" r="0" fill="var(--blue)"/></g>
-        <g id="plate6" class="plate" data-plate="6"><circle cx="780" cy="60" r="0" fill="var(--ice)"/></g>
-      </svg>
-      <p class="barbell-caption" id="barbellCaption">0 / 6 objectifs chargés</p>
-    </div>
+  <!-- Barre qui se charge au fil du scroll -->
+  <div class="barbell-rail" id="barbellRail">
+    <svg class="barbell-svg" id="barbellSvg" viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="60" x2="840" y2="60" stroke="var(--steel)" stroke-width="10" stroke-linecap="round"/>
+      <!-- 6 emplacements de disques, remplis un par un via JS/scroll -->
+      <g id="plate1" class="plate" data-plate="1"><circle cx="120" cy="60" r="0" fill="var(--blue)"/></g>
+      <g id="plate2" class="plate" data-plate="2"><circle cx="240" cy="60" r="0" fill="var(--ice)"/></g>
+      <g id="plate3" class="plate" data-plate="3"><circle cx="360" cy="60" r="0" fill="var(--blue)"/></g>
+      <g id="plate4" class="plate" data-plate="4"><circle cx="540" cy="60" r="0" fill="var(--ice)"/></g>
+      <g id="plate5" class="plate" data-plate="5"><circle cx="660" cy="60" r="0" fill="var(--blue)"/></g>
+      <g id="plate6" class="plate" data-plate="6"><circle cx="780" cy="60" r="0" fill="var(--ice)"/></g>
+    </svg>
+    <p class="barbell-caption" id="barbellCaption">0 / 6 objectifs chargés</p>
+  </div>
 
-    <div class="programmes-grid">
+  <div class="programmes-grid">
 
-      <article class="prog-card tilt-card" data-plate-target="1" data-aos="fade-up">
-        <span class="prog-index">01</span>
-        <h3>Prise de masse</h3>
-        <p>Surplus calorique contrôlé, volume progressif, priorité aux mouvements poly-articulaires. Pour construire du muscle sans empiler du gras inutilement.</p>
-        <a href="programmes.html?cat=prise_masse" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="1" data-aos="fade-up">
+      <span class="prog-index">01</span>
+      <h3>Prise de masse</h3>
+      <p>Surplus calorique contrôlé, volume progressif, priorité aux mouvements poly-articulaires. Pour construire du muscle sans empiler du gras inutilement.</p>
+      <a href="programmes.html?cat=prise_masse" class="prog-link">Voir le programme →</a>
+    </article>
 
-      <article class="prog-card tilt-card" data-plate-target="2" data-aos="fade-up">
-        <span class="prog-index">02</span>
-        <h3>Sèche sans perte musculaire</h3>
-        <p>Déficit calorique modéré, apport protéique élevé, maintien des charges. L'objectif : révéler le muscle, pas le sacrifier.</p>
-        <a href="programmes.html?cat=seche" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="2" data-aos="fade-up">
+      <span class="prog-index">02</span>
+      <h3>Sèche sans perte musculaire</h3>
+      <p>Déficit calorique modéré, apport protéique élevé, maintien des charges. L'objectif : révéler le muscle, pas le sacrifier.</p>
+      <a href="programmes.html?cat=seche" class="prog-link">Voir le programme →</a>
+    </article>
 
-      <article class="prog-card tilt-card" data-plate-target="3" data-aos="fade-up">
-        <span class="prog-index">03</span>
-        <h3>Perte de gras</h3>
-        <p>Combinaison musculation + travail métabolique. Un plan pensé pour faire fondre la masse grasse tout en gardant ton énergie.</p>
-        <a href="programmes.html?cat=perte_gras" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="3" data-aos="fade-up">
+      <span class="prog-index">03</span>
+      <h3>Perte de gras</h3>
+      <p>Combinaison musculation + travail métabolique. Un plan pensé pour faire fondre la masse grasse tout en gardant ton énergie.</p>
+      <a href="programmes.html?cat=perte_gras" class="prog-link">Voir le programme →</a>
+    </article>
 
-      <article class="prog-card tilt-card" data-plate-target="4" data-aos="fade-up">
-        <span class="prog-index">04</span>
-        <h3>Maintien de forme</h3>
-        <p>Volume d'entretien, fréquence modérée. Pour rester performant et solide sans viser une progression agressive.</p>
-        <a href="programmes.html?cat=maintien" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="4" data-aos="fade-up">
+      <span class="prog-index">04</span>
+      <h3>Maintien de forme</h3>
+      <p>Volume d'entretien, fréquence modérée. Pour rester performant et solide sans viser une progression agressive.</p>
+      <a href="programmes.html?cat=maintien" class="prog-link">Voir le programme →</a>
+    </article>
 
-      <article class="prog-card tilt-card" data-plate-target="5" data-aos="fade-up">
-        <span class="prog-index">05</span>
-        <h3>Cardio</h3>
-        <p>Endurance, capacité respiratoire, santé cardiovasculaire. Des séances structurées, du seuil au fractionné.</p>
-        <a href="programmes.html?cat=cardio" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="5" data-aos="fade-up">
+      <span class="prog-index">05</span>
+      <h3>Cardio</h3>
+      <p>Endurance, capacité respiratoire, santé cardiovasculaire. Des séances structurées, du seuil au fractionné.</p>
+      <a href="programmes.html?cat=cardio" class="prog-link">Voir le programme →</a>
+    </article>
 
-      <article class="prog-card tilt-card" data-plate-target="6" data-aos="fade-up">
-        <span class="prog-index">06</span>
-        <h3>Perte de poids</h3>
-        <p>Approche globale : déficit calorique, activité physique régulière, régularité avant tout. Pas de raccourci, des résultats durables.</p>
-        <a href="programmes.html?cat=perte_poids" class="prog-link">Voir le programme →</a>
-      </article>
+    <article class="prog-card tilt-card" data-plate-target="6" data-aos="fade-up">
+      <span class="prog-index">06</span>
+      <h3>Perte de poids</h3>
+      <p>Approche globale : déficit calorique, activité physique régulière, régularité avant tout. Pas de raccourci, des résultats durables.</p>
+      <a href="programmes.html?cat=perte_poids" class="prog-link">Voir le programme →</a>
+    </article>
 
-    </div>
   </div>
 </section>
 
@@ -304,8 +305,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="theme-toggle.js"></script>
-<script src="script.js"></script>
+<script src="config.js?v=2"></script>
+<script src="theme-toggle.js?v=2"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>

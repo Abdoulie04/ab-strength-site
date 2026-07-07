@@ -5,30 +5,6 @@ const loadingState = document.getElementById('loadingState');
 const errorState = document.getElementById('errorState');
 const programmeContent = document.getElementById('programmeContent');
 
-// =========================================
-// VIDÉOS DE FOND PAR CATÉGORIE
-// =========================================
-const VIDEOS_PAR_CATEGORIE = {
-  prise_masse: 'assets/prise-masse.mp4',
-  seche: 'assets/seche.mp4',
-  perte_gras: 'assets/perte-gras.mp4',
-  maintien: 'assets/maintien.mp4',
-  cardio: 'assets/cardio.mp4',
-  perte_poids: 'assets/perte-poids.mp4'
-};
-
-function setProgHeroVideo(categorie) {
-  const video = document.getElementById('progHeroVideo');
-  const source = document.getElementById('progHeroSource');
-  const src = VIDEOS_PAR_CATEGORIE[categorie];
-
-  if (src && video && source) {
-    source.src = src;
-    video.load();
-    video.play().catch(() => {}); // ignore si l'autoplay est bloqué par le navigateur
-  }
-}
-
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
@@ -74,8 +50,6 @@ function renderProgramme(p) {
   document.getElementById('progCategorie').textContent = catInfo ? catInfo.label : p.categorie;
   document.getElementById('progTitre').textContent = p.titre;
   document.getElementById('progDescription').textContent = p.description || '';
-
-  setProgHeroVideo(p.categorie);
 
   const metaEl = document.getElementById('progMeta');
   const metaItems = [];
@@ -126,9 +100,9 @@ function renderEtapes(etapes) {
               ${escapeHtml(ex.nom)}
               ${ex.notes ? `<span class="ex-note">${escapeHtml(ex.notes)}</span>` : ''}
             </span>
-            <span class="ex-data">${ex.nb_series ?? '—'}</span>
-            <span class="ex-data">${ex.nb_repetitions ?? '—'}</span>
-            <span class="ex-data">${formatRepos(ex.temps_repos)}</span>
+            <span class="ex-data" data-label="Séries">${ex.nb_series ?? '—'}</span>
+            <span class="ex-data" data-label="Répétitions">${ex.nb_repetitions ?? '—'}</span>
+            <span class="ex-data" data-label="Récupération">${formatRepos(ex.temps_repos)}</span>
           </div>
         `).join('') || '<p class="empty-note">Aucun exercice renseigné pour cette étape.</p>'}
       </div>

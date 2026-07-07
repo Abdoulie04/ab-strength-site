@@ -48,6 +48,8 @@ function renderProgramme(p) {
 
   document.title = `${p.titre} — AB STRENGTH`;
   document.getElementById('progCategorie').textContent = catInfo ? catInfo.label : p.categorie;
+
+  setHeroVideo(document.getElementById('progHeroVideo'), document.getElementById('progHeroSource'), p.categorie);
   document.getElementById('progTitre').textContent = p.titre;
   document.getElementById('progDescription').textContent = p.description || '';
 

@@ -10,32 +10,6 @@ const emptyState = document.getElementById('emptyState');
 const errorState = document.getElementById('errorState');
 const catalogueGrid = document.getElementById('catalogueGrid');
 
-// =========================================
-// VIDÉO DE FOND SELON LA CATÉGORIE
-// =========================================
-const VIDEOS_PAR_CATEGORIE = {
-  prise_masse: 'assets/prise-masse.mp4',
-  seche: 'assets/seche.mp4',
-  perte_gras: 'assets/perte-gras.mp4',
-  maintien: 'assets/maintien.mp4',
-  cardio: 'assets/cardio.mp4',
-  perte_poids: 'assets/perte-poids.mp4'
-};
-
-function setPageHeroVideo(categorie) {
-  const video = document.getElementById('pageHeroVideo');
-  const source = document.getElementById('pageHeroSource');
-  const src = VIDEOS_PAR_CATEGORIE[categorie] || 'assets/hero-bg.mp4';
-
-  if (video && source) {
-    source.src = src;
-    video.load();
-    video.play().catch(() => {});
-  }
-}
-
-setPageHeroVideo(catSlug);
-
 // En-tête de la page selon la catégorie
 if (catInfo) {
   catEyebrow.textContent = "Catégorie";
@@ -46,6 +20,8 @@ if (catInfo) {
   catTitle.textContent = "Nos programmes";
   catSub.textContent = "Retrouve tous les programmes disponibles, tous objectifs confondus.";
 }
+
+setHeroVideo(document.getElementById('pageHeroVideo'), document.getElementById('pageHeroSource'), catSlug);
 
 async function loadProgrammes() {
   try {

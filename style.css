@@ -427,6 +427,62 @@ img { max-width: 100%; display: block; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+.programmes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.prog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.prog-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(255, 90, 31, 0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.prog-card:hover {
+  border-color: var(--blue);
+  background: var(--bg-card-hover);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+.prog-card:hover::before { opacity: 1; }
+.prog-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--blue);
+  display: block;
+  margin-bottom: 16px;
+}
+.prog-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+}
+.prog-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+.prog-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ice);
+  transition: gap 0.2s ease, opacity 0.2s ease;
+}
+.prog-link:hover { opacity: 0.7; }
 /* =========================================
    COMMENT ÇA MARCHE
 ========================================= */
